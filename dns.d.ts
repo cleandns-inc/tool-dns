@@ -1,15 +1,10 @@
-global {
-  namespace NodeJS {
-    interface ProcessEnv {
-    }
-  }
-}
+/// <reference types="typescript" />
 
-export type DnsParameters = {
-  tries?: number;
-  timeout?: number;
-  servers?: string[];
-}
+export type DnsParameters = Partial<{
+  tries: number;
+  timeout: number;
+  servers: string[];
+}>;
 
 export type DnsResponse = {
   A: string[];

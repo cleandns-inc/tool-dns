@@ -1,5 +1,5 @@
 import { Resolver } from "dns/promises";
-import { DnsParameters, DnsResponse } from "./types.js";
+import { DnsParameters, DnsResponse } from "../dns.js";
 
 export async function dns(
   target: string,
