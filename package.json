@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "upload": "npm run build && npm version patch && npm publish"
   },
   "repository": {
     "type": "git",

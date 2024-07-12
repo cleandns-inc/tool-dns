@@ -1,16 +1,24 @@
 import { Resolver } from "dns/promises";
 import { DnsParameters, DnsResponse } from "../dns.js";
 
+const dnsServers = [
+  '1.1.1.1', '1.0.0.1', // Cloudflare
+  '8.8.8.8', '8.8.4.4', // Google
+  '9.9.9.9', '149.112.112.112', // Quad9
+  '208.67.222.222', '208.67.220.220', // OpenDNS
+  '185.228.168.9', '185.228.169.9', // CleanBrowsing
+];
+
 export async function dns(
   target: string,
   {
     tries = 3,
     timeout = 1000,
-    servers = ["8.8.8.8", "1.1.1.1"],
+    servers,
   }: DnsParameters = {}
 ): Promise<DnsResponse> {
   const DNS = new Resolver({ tries, timeout });
-  DNS.setServers(servers);
+  DNS.setServers(servers || shuffle(dnsServers));
 
   const record: DnsResponse = {
     A: [],
@@ -68,4 +76,16 @@ export async function dns(
   ]);
 
   return record;
+}
+
+function shuffle (array: any[]) {
+  const copy = [...array];
+  const shuffled: any[] = [];
+
+  while (copy.length) {
+    const index = Math.floor(Math.random() * copy.length);
+    shuffled.push(copy.splice(index, 1)[0]);
+  }
+
+  return shuffled;
 }
