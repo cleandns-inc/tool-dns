@@ -1,5 +1,6 @@
 import { Resolver } from "dns/promises";
 import { DnsParameters, DnsResponse } from "../dns.js";
+export { DnsResponse };
 
 const dnsServers = [
   '1.1.1.1', '1.0.0.1', // Cloudflare
