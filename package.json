@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/cleandns-inc/tool-dns#readme",
   "devDependencies": {
-    "typescript": "^5.4.3"
+    "@types/node": "^22.9.1",
+    "typescript": "^5.6.3"
   }
 }

@@ -33,42 +33,42 @@ export async function dns(
 
   await Promise.all([
     DNS.resolve4(target)
-      .then((r) => {
+      .then((r: string[]) => {
         record.A = r;
       })
       .catch((err) => {
         record.errors.push({ query: "A", code: err.code });
       }),
     DNS.resolve6(target)
-      .then((r) => {
+      .then((r: string[]) => {
         record.AAAA = r;
       })
       .catch((err) => {
         record.errors.push({ query: "AAAA", code: err.code });
       }),
     DNS.resolveNs(target)
-      .then((r) => {
+      .then((r: string[]) => {
         record.NS = r;
       })
       .catch((err) => {
         record.errors.push({ query: "NS", code: err.code });
       }),
     DNS.resolveMx(target)
-      .then((r) => {
+      .then((r: { priority: number; exchange: string }[]) => {
         record.MX = r;
       })
       .catch((err) => {
         record.errors.push({ query: "MX", code: err.code });
       }),
     DNS.resolveTxt(target)
-      .then((r) => {
+      .then((r: string[][]) => {
         record.TXT = r.map((txt) => txt.join(""));
       })
       .catch((err) => {
         record.errors.push({ query: "TXT", code: err.code });
       }),
     DNS.resolveSoa(target)
-      .then((r) => {
+      .then((r: object) => {
         record.SOA = r;
       })
       .catch((err) => {
