@@ -7,7 +7,8 @@ DNS lookups for hostnames.
 ```typescript
 import { dns } from "@cleandns/dns";
 
-const records = await dns("google.com");```
+const records = await dns("google.com");
+```
 
 ## Installation
 
