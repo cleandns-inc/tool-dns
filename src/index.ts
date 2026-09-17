@@ -1,13 +1,19 @@
 import { Resolver } from "dns/promises";
-import { DnsParameters, DnsResponse } from "../dns.js";
-export { DnsResponse };
+import Tangerine from "tangerine";
+import type { DnsParameters, DnsResponse } from "../dns.js";
+export type { DnsResponse };
 
 const dnsServers = [
-  '1.1.1.1', '1.0.0.1', // Cloudflare
-  '8.8.8.8', '8.8.4.4', // Google
-  '9.9.9.9', '149.112.112.112', // Quad9
-  '208.67.222.222', '208.67.220.220', // OpenDNS
-  '185.228.168.9', '185.228.169.9', // CleanBrowsing
+  "1.1.1.1",
+  "1.0.0.1", // Cloudflare
+  "8.8.8.8",
+  "8.8.4.4", // Google
+  "9.9.9.9",
+  "149.112.112.112", // Quad9
+  "208.67.222.222",
+  "208.67.220.220", // OpenDNS
+  "185.228.168.9",
+  "185.228.169.9", // CleanBrowsing
 ];
 
 export async function dns(
@@ -16,10 +22,15 @@ export async function dns(
     tries = 3,
     timeout = 1000,
     servers,
-  }: DnsParameters = {}
+    defaultServers = false,
+    dnsOverHttps = false,
+  }: DnsParameters = {},
 ): Promise<DnsResponse> {
-  const DNS = new Resolver({ tries, timeout });
-  DNS.setServers(servers || shuffle(dnsServers));
+  const DNS: Resolver = dnsOverHttps
+      // @ts-ignore (typescript thinks `new Tangerine` is an error)
+    ? new Tangerine({ tries, timeout })
+    : new Resolver({ tries, timeout });
+  if (!defaultServers) DNS.setServers(servers || shuffle(dnsServers));
 
   const record: DnsResponse = {
     A: [],
@@ -79,7 +90,7 @@ export async function dns(
   return record;
 }
 
-function shuffle (array: any[]) {
+function shuffle(array: any[]) {
   const copy = [...array];
   const shuffled: any[] = [];
 
