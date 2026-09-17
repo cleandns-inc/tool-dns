@@ -4,6 +4,8 @@ export type DnsParameters = Partial<{
   tries: number;
   timeout: number;
   servers: string[];
+  defaultServers?: boolean;
+  dnsOverHttps?: boolean;
 }>;
 
 export type DnsResponse = {
